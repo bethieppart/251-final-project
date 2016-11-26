@@ -16,16 +16,17 @@ object MyDateTimeRange {
 
 object TwitterSparseDownload {
   def main(args: Array[String]) {
-    if (args.length < 4) {
-      System.err.println("Usage: You must supply exactly 4 arguments in the following order: " +
+    if (args.length < 5) {
+      System.err.println("Usage: You must supply exactly 5 arguments in the following order: " +
         "<username>" +
         "<password>" +
         "<start datetime in UTC, inclusive>" +
-        "<end datetime in UTC, inclusive>")
+        "<end datetime in UTC, inclusive>" +
+        "<data directory>")
       System.exit(1)
     }
 
-    val Array(username, password, fromString, toString) = args.take(4)
+    val Array(username, password, fromString, toString, dataDir) = args.take(5)
     val fromDT = ZonedDateTime.parse(fromString)
     val toDT = ZonedDateTime.parse(toString)
 
@@ -57,8 +58,8 @@ object TwitterSparseDownload {
 
       println("%s is done...".format(t0))
 
-      newFileNames += "/home/twitter/archive/file_%s".
-                      format(t.format(DateTimeFormatter.ofPattern("yyyyMMdd_HH:mm")))
+      newFileNames += "%s/file_%s".
+                      format(dataDir, t.format(DateTimeFormatter.ofPattern("yyyyMMdd_HH:mm")))
 
       if (t.getMinute() % 10 == 5) {
         val rdd = sc.parallelize(collectedTweets.toList).repartition(1)
