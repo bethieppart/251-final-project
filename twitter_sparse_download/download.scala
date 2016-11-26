@@ -59,7 +59,7 @@ object TwitterSparseDownload {
       println("%s is done...".format(t0))
 
       newFileNames += "%s/file_%s".
-                      format(dataDir, t.format(DateTimeFormatter.ofPattern("yyyyMMdd_HH:mm")))
+                      format(dataDir, t.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm")))
 
       if (t.getMinute() % 10 == 5) {
         val rdd = sc.parallelize(collectedTweets.toList).repartition(1)
@@ -68,7 +68,7 @@ object TwitterSparseDownload {
         collectedTweets.clear()
         newFileNames.clear()
       }
-      Thread.sleep(2000)
+      Thread.sleep(1000)
     }
 
     // Final flush if there is any unsaved tweet.
