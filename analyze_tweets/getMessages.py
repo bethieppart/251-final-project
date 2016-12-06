@@ -29,6 +29,15 @@ messages = f.map(lambda x: json.loads(x))\
             	i["message"]["postedTime"],\
             	i["cde"]["content"]["sentiment"]["polarity"],\
             	sum([float(wmBroadcast.value.get(word).get("happiness_average")) for word in i["message"]["body"].split() if word in wmBroadcast.value])] for i in x])
+
+hillary = messages.filter(lambda x: any(word in x[0] for word in ["hillary","clinton","rodham"]))
+trump = messages.filter(lambda x: any(word in x[0] for word in ["donald","trump"]))
+political = messages.filter(lambda x: any(word in x[0] for word in ["politics","political","election","vote","crooked","rally","debate","liberal","progressive","conservative","republican","leftwing","rightwing","democrat","alt-right"]))
+
+pprint(hillary.take(2))
+pprint(trump.take(2))
+pprint(political.take(2))
+
 proof = messages.take(int(sys.argv[1]))
 pprint(proof)
 pprint(len(proof))
