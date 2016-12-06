@@ -31,7 +31,7 @@ f = sc.textFile("/data/archive/*/part-0000*")
 #More compact
 messages = f.map(lambda x: json.loads(x))\
 	    .map(lambda x: x["tweets"])\
-	    .map(lambda x: [x[0]["message"]["body"],x[0]["cde"]["content"]["sentiment"]["polarity"]])
+	    .flatMap(lambda x: [[i["message"]["body"],i["cde"]["content"]["sentiment"]["polarity"]] for i in x])
 sentiment = messages.map(lambda x: [x[0], x[1], sum([float(wmBroadcast.value.get(word).get("happiness_average")) for word in x[0].split() if word in wmBroadcast.value])])
 proof = messages.take(int(sys.argv[1]))
 pprint(proof)
