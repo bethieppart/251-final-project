@@ -30,14 +30,22 @@ messages = f.map(lambda x: json.loads(x))\
             	i["cde"]["content"]["sentiment"]["polarity"],\
             	sum([float(wmBroadcast.value.get(word).get("happiness_average")) for word in i["message"]["body"].split() if word in wmBroadcast.value])] for i in x])
 
-hillary = messages.filter(lambda x: any(word in x[0] for word in ["hillary","clinton","rodham"]))
-trump = messages.filter(lambda x: any(word in x[0] for word in ["donald","trump"]))
-political = messages.filter(lambda x: any(word in x[0] for word in ["politics","political","election","vote","crooked","rally","debate","liberal","progressive","conservative","republican","leftwing","rightwing","democrat","alt-right"]))
+#Form: {tweetBody,[city,country,state], "dateTime", "polarity","happiness"}
+hillary = messages.filter(lambda x: any(word in x[0] for word in ["hillary","clinton","rodham"]))\
+					.flatMap(lambda x: [(x[2].split('T')[0] + i , [1, x[3],x[4], x[2], i]) for i in set(["United States"]+x[1].values())])\
+					.reduceByKey(lambda a, b: (a[0]+b[0],[a[1],b[1]],a[2]+b[2], a[3],a[4]))
 
-pprint(hillary.take(2))
-pprint(trump.take(2))
-pprint(political.take(2))
+trump = messages.filter(lambda x: any(word in x[0] for word in ["donald","trump"]))\
+					.flatMap(lambda x: [(x[2].split('T')[0] + i , [1, x[3],x[4], x[2], i]) for i in set(["United States"]+x[1].values())])\
+					.reduceByKey(lambda a, b: (a[0]+b[0],[a[1],b[1]],a[2]+b[2], a[3],a[4]))
 
-proof = messages.take(int(sys.argv[1]))
-pprint(proof)
-pprint(len(proof))
+political = messages.filter(lambda x: any(word in x[0] for word in ["politics","political","election","vote","crooked","rally","debate","liberal","progressive","conservative","republican","leftwing","rightwing","democrat","alt-right"]))\
+					.flatMap(lambda x: [(x[2].split('T')[0] + i , [1, x[3],x[4], x[2], i]) for i in set(["United States"]+x[1].values())])\
+					.reduceByKey(lambda a, b: (a[0]+b[0],[a[1],b[1]],a[2]+b[2], a[3],a[4]))
+
+
+hillary.saveAsTextFile("/data/jobOutputs/hillary")
+trump.saveAsTextFile("/data/jobOutputs/trump")
+political.saveAsTextFile("/data/jobOutputs/political")
+
+pprint(hillary.take(1))
