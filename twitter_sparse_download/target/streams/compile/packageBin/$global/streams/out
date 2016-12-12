@@ -1,0 +1,17 @@
+[0m[[0minfo[0m] [0mPackaging /root/251-final-project/twitter_sparse_download/target/scala-2.10/twitter-sparse-download_2.10-1.0.jar ...[0m
+[0m[[0mdebug[0m] [0mInput file mappings:[0m
+[0m[[0mdebug[0m] [0m	TwitterSparseDownload.class[0m
+[0m[[0mdebug[0m] [0m	  /root/251-final-project/twitter_sparse_download/target/scala-2.10/classes/TwitterSparseDownload.class[0m
+[0m[[0mdebug[0m] [0m	MyDateTimeRange.class[0m
+[0m[[0mdebug[0m] [0m	  /root/251-final-project/twitter_sparse_download/target/scala-2.10/classes/MyDateTimeRange.class[0m
+[0m[[0mdebug[0m] [0m	TwitterSparseDownload$$anonfun$main$1.class[0m
+[0m[[0mdebug[0m] [0m	  /root/251-final-project/twitter_sparse_download/target/scala-2.10/classes/TwitterSparseDownload$$anonfun$main$1.class[0m
+[0m[[0mdebug[0m] [0m	MyDateTimeRange$.class[0m
+[0m[[0mdebug[0m] [0m	  /root/251-final-project/twitter_sparse_download/target/scala-2.10/classes/MyDateTimeRange$.class[0m
+[0m[[0mdebug[0m] [0m	MyDateTimeRange$$anonfun$iter$2.class[0m
+[0m[[0mdebug[0m] [0m	  /root/251-final-project/twitter_sparse_download/target/scala-2.10/classes/MyDateTimeRange$$anonfun$iter$2.class[0m
+[0m[[0mdebug[0m] [0m	TwitterSparseDownload$.class[0m
+[0m[[0mdebug[0m] [0m	  /root/251-final-project/twitter_sparse_download/target/scala-2.10/classes/TwitterSparseDownload$.class[0m
+[0m[[0mdebug[0m] [0m	MyDateTimeRange$$anonfun$iter$1.class[0m
+[0m[[0mdebug[0m] [0m	  /root/251-final-project/twitter_sparse_download/target/scala-2.10/classes/MyDateTimeRange$$anonfun$iter$1.class[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m

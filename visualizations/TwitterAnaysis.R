@@ -33,3 +33,41 @@ ggplot(A[A$location=="united states",],aes(x=date, y=avgSentiment, group=label,c
 #Maps would be nice, but seems like something more for tableau or another teammate to do
 
 dev.off()
+
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(viridis)
+library(ggthemes)
+require(scales)
+# this next code will need to be adapted if you don't have a ../data/ folder...
+# alternatively, if that link stops working, there's a static copy at http://ellisp.github.io/data/polls.csv
+www <- "http://projects.fivethirtyeight.com/general-model/president_general_polls_2016.csv"
+download.file(www, destfile = "../data/polls.csv")
+
+# download data
+plz <- read.csv("../data/polls.csv", stringsAsFactors = FALSE)
+plz$url<-NULL
+plz<-plz[plz$state=='U.S.',]
+plz$date<-as.Date(strptime(plz$createddate, '%m/%d/%y'))
+
+trmp<-do.call(rbind.data.frame, by(plz$rawpoll_trump, plz$date, mean, simplify = FALSE))
+clint<-do.call(rbind.data.frame, by(plz$rawpoll_clinton, plz$date, mean, simplify = FALSE))
+johns<-do.call(rbind.data.frame, by(plz$rawpoll_johnson, plz$date, mean, simplify = FALSE))
+names(trmp)<-c('trump_avg')
+names(clint)<-c('clint_avg')
+names(johns)<-c('johns_avg')
+pollAvg<-data.frame(date=row.names(trmp), trump_avg=trmp$trump_avg,clint_avg=clint$clint_avg,johns_avg=johns$johns_avg)
+
+
+ggplot(pollAvg, aes(x=as.Date(date))) + geom_point(aes(y=clint_avg, color="Clinton"), color="Blue") + geom_point(aes(y=trump_avg, color="Trump"), color="Red") +
+  scale_x_date(labels = date_format("%m-%Y")) + ylim(25,75)
+
+
+
+ggplot(pollAvg, aes(x=as.Date(date))) + geom_point(aes(y=clint_avg, color="Clinton")) + geom_smooth(aes(y=clint_avg, color="Clinton")) + geom_point(aes(y=trump_avg, color="Trump")) + geom_smooth(aes(y=trump_avg, color="Trump")) +
+  scale_x_date(labels = date_format("%m-%Y")) + ylim(25,75)+scale_color_manual(name = "Candidate", 
+                   labels = c("Clinton", "Trump"),
+                   values = c("Blue","Red")) + xlab("Date") + ylab("Polling Average") + ggtitle("National Election Polling Averages")
+
