@@ -33,7 +33,7 @@ def parseToCsv():
 				date = reg.sub('', key)
 				tweetCount = value[0]
 				polarities = value[1] #Gotta do something here.  Maybe take the sum sum() sum([sentScores[p] for p in polarities])/len(polarities)
-				polarityScore = sum([sentimentScores[p] for p in polarities])/len(polarities)
+				polarityScore = float(sum([sentimentScores[p] for p in polarities]))/len(polarities)
 				totalSentiment = value[2]
 				avgSentiment = totalSentiment/tweetCount
 				fullDate = value[3]
